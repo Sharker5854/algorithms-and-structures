@@ -9,7 +9,7 @@ namespace algorithms
     public class Element
     {
         public int Value = 0;
-        public Element? Next = null;
+        public Element? Next;
 
         public Element(int value, Element? next = null) 
         {
