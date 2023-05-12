@@ -8,29 +8,30 @@ namespace algorithms
 {
     public class SimpleChoice
     {
-        public int[] array;
+        public Stack stack;
 
-        public SimpleChoice(int[] array)
+        public SimpleChoice(Stack stack)
         {
-            this.array = array;
+            this.stack = stack;
         }
 
-        public int[] Sort()
+        public Stack Sort()
         {
             int x, y, min_index;
-            for (x = 0; x < array.Length - 1; x++)
+            for (x = 0; x < stack.length - 1; x++)
             {
+                Console.WriteLine(x + "   " + stack.Show());
                 min_index = x;
-                for (y = x + 1; y < array.Length; y++)
+                for (y = x + 1; y < stack.length; y++)
                 {
-                    if (array[y] < array[min_index])
+                    if (stack[y] < stack[min_index])
                     {
                         min_index = y;
                     }
                 }
-                (array[x], array[min_index]) = (array[min_index], array[x]);
+                (stack[x], stack[min_index]) = (stack[min_index], stack[x]);
             }
-            return array;
+            return stack;
         }
     }
 }

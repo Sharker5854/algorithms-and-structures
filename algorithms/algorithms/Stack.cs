@@ -57,7 +57,7 @@ namespace algorithms
                     tmp_stack.Push(this.Pop());
                 }
                 int result = this.head.Value;
-                for (int tmp_cnt = 0; tmp_cnt < tmp_stack.length; tmp_cnt++)
+                while (tmp_stack.length != 0)
                 {
                     this.Push(tmp_stack.Pop());
                 }
@@ -68,7 +68,7 @@ namespace algorithms
 
         public void Set(int index, int value)
         {
-            if ((index >= 0) && (index < this.length))
+            if ((index >= 0) && (index <= this.length))
             {
                 Stack tmp_stack = new Stack();
                 for (int cnt = 0; cnt < index; cnt++)
@@ -76,14 +76,10 @@ namespace algorithms
                     tmp_stack.Push(this.Pop());
                 }
                 this.Push(new Element(value, this.head));
-                if (tmp_stack.length > 0)
+                while (tmp_stack.length != 0)
                 {
-                    for (int tmp_cnt = 0; tmp_cnt < tmp_stack.length + 1; tmp_cnt++)
-                    {
-                        this.Push(tmp_stack.Pop());
-                    }
+                    this.Push(tmp_stack.Pop());
                 }
-                this.length++;
                 return;
             }
             throw new Exception("Index out of range.");
@@ -91,7 +87,7 @@ namespace algorithms
 
         public void Set(int index, Element value)
         {
-            if ((index >= 0) && (index < this.length))
+            if ((index >= 0) && (index <= this.length))
             {
                 Stack tmp_stack = new Stack();
                 for (int cnt = 0; cnt < index; cnt++)
@@ -100,14 +96,10 @@ namespace algorithms
                 }
                 value.Next = this.head;
                 this.Push(value);
-                if (tmp_stack.length > 0)
+                while (tmp_stack.length != 0)
                 {
-                    for (int tmp_cnt = 0; tmp_cnt < tmp_stack.length + 1; tmp_cnt++)
-                    {
-                        this.Push(tmp_stack.Pop());
-                    }
+                    this.Push(tmp_stack.Pop());
                 }
-                this.length++;
                 return;
             }
             throw new Exception("Index out of range.");
