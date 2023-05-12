@@ -14,7 +14,7 @@ namespace algorithms
         public Element(int value, Element? next = null) 
         {
             this.Value = value;
-            this.Next = next;
+            this.Next = next;   // указатель на следующий элемент в стеке
         }
     }
 }

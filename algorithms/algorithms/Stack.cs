@@ -15,49 +15,52 @@ namespace algorithms
 
         public Stack()
         {
-            head = null;
+            head = null; // изначально голова стека равняется null
         }
 
-        public void Push(int value)
+        /* Вталкиваем элемент в стек, со стороны головы */
+        public void Push(int value) // если передано просто число
         {
-            Element new_elem = new Element(value, head);
-            head = new_elem;
-            this.length++;
+            Element new_elem = new Element(value, head);   // создаём новый элемент с переданным value, поле Next которого ссылается на предыдущую голову
+            head = new_elem;   // этот новый элемент теперь становитя головой
+            this.length++;   // увеличиваем счетчик длины стека
         }
 
-        public void Push(Element elem)
+        public void Push(Element elem) // если передан сразу экземпляр класса Element
         {
             elem.Next = head;
             head = elem;
             this.length++;
         }
 
+        /* Выталкиваем верхний элемент из стека, со стороны головы  */
         public Element? Pop()
         {
-            if (head != null)
+            if (head != null)   // если стек не пустой
             {
-                Element result = head;
-                head = head.Next;
-                length--;
+                Element result = head;   // сохраняем выталкиваемый элемент 
+                head = head.Next;   // головой теперь становится тот элемент, который хранился в head.Next
+                length--;   // уменьшаем счетчик длины стека
                 return result;
             }
             else
             {
-                throw new Exception("Stack is empty.");
+                throw new Exception("Stack is empty.");   // если стек пустой, то кидаем исключение в юзера
             }
         }
 
+        /* Получение элемента стека по индексу */
         public int Get(int index)
         {
-            if ((this.length - 1 >= index) && (index >= 0))
+            if ((this.length - 1 >= index) && (index >= 0))   // если индекс попадает в диапазон стека
             {
                 Stack tmp_stack = new Stack();
-                for (int cnt = 0; cnt < index; cnt++)
+                for (int cnt = 0; cnt < index; cnt++)   // записываем все элементы стека до искомого индекса (не включая) во временный стек
                 {
                     tmp_stack.Push(this.Pop());
                 }
-                int result = this.head.Value;
-                while (tmp_stack.length != 0)
+                int result = this.head.Value;   // сохраняем искомый элемент
+                while (tmp_stack.length != 0)   // возвращаем всё как было
                 {
                     this.Push(tmp_stack.Pop());
                 }
@@ -66,17 +69,18 @@ namespace algorithms
             throw new Exception("Index out of range.");  
         }
 
-        public void Set(int index, int value)
+        /* Вставка элемента в стек по переданному индексу */
+        public void Set(int index, int value)   // вставка, если передано просто число
         {
-            if ((index >= 0) && (index <= this.length))
+            if ((index >= 0) && (index <= this.length))   // если индекс попадает в диапазон стека
             {
                 Stack tmp_stack = new Stack();
-                for (int cnt = 0; cnt < index; cnt++)
+                for (int cnt = 0; cnt < index; cnt++)   // записываем все элементы стека до искомого индекса (не включая) во временный стек
                 {
                     tmp_stack.Push(this.Pop());
                 }
-                this.Push(new Element(value, this.head));
-                while (tmp_stack.length != 0)
+                this.Push(new Element(value, this.head));   // вталкиваем новый элемент, поле Next которого будет ссылаться на бывший this[index] элемент
+                while (tmp_stack.length != 0)   // возвращаем элементы из временного стека
                 {
                     this.Push(tmp_stack.Pop());
                 }
@@ -85,7 +89,7 @@ namespace algorithms
             throw new Exception("Index out of range.");
         }
 
-        public void Set(int index, Element value)
+        public void Set(int index, Element value)   // вставка, если передан сразу экземпляр класса Element
         {
             if ((index >= 0) && (index <= this.length))
             {
@@ -105,6 +109,7 @@ namespace algorithms
             throw new Exception("Index out of range.");
         }
 
+        /* Красивый вывод стека с указанием головы */
         public string Show()
         {
             string result = "HEAD -> { ";
@@ -123,6 +128,7 @@ namespace algorithms
 
         }
 
+        /* Перегрузка оператора индексации */
         public int this[int index]
         {
             get => Get(index);
