@@ -1,9 +1,9 @@
 ﻿using algorithms;
 using System.Diagnostics;
 
-internal class Application
+public class Application
 {
-    static long N_OP = 0;
+    public static long N_OP = 0;
 
     static void Main(string[] args)
     {
@@ -16,8 +16,8 @@ internal class Application
             {
                 stack.Push(new Element(rand.Next(1000)));
             }
-            SimpleChoice sc =  new SimpleChoice(stack);
             N_OP = 0;
+            SimpleChoice sc =  new SimpleChoice(stack);
             timer.Restart();
             sc.Sort();
             timer.Stop();
