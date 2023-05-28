@@ -11,10 +11,11 @@ namespace algorithms
         public int Value = 0;
         public Element? Next;
 
-        public Element(int value, Element? next = null) 
+        public Element(int value, Element? next = null)  // 2
         {
-            this.Value = value;
-            this.Next = next;   // указатель на следующий элемент в стеке
+            this.Value = value;  // 1
+            // указатель на следующий элемент в стеке
+            this.Next = next;  // 1
         }
     }
 }

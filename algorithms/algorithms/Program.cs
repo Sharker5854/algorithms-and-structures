@@ -1,8 +1,34 @@
 ﻿using algorithms;
+using System.Diagnostics;
+
+internal class Application
+{
+    static long N_OP = 0;
+
+    static void Main(string[] args)
+    {
+        Stopwatch timer = new Stopwatch();
+        Random rand = new Random();
+        for (int i = 1; i <= 10; i++)
+        {
+            Stack stack = new Stack();
+            for (int j = 0; j < i*300; j++)
+            {
+                stack.Push(new Element(rand.Next(1000)));
+            }
+            SimpleChoice sc =  new SimpleChoice(stack);
+            N_OP = 0;
+            timer.Restart();
+            sc.Sort();
+            timer.Stop();
+            Console.WriteLine($"Номер сортировки: {i} Количество отсортированных элементов: {i * 300} Время сортировки (m:s.ms): {timer.Elapsed.ToString().Substring(3)} Количество операций (N_Op): {N_OP}");
+        }
+    }
+}
 
 
 // --- Работа со стеком --- //
-
+/*
 var st = new algorithms.Stack();
 
 Console.WriteLine(st.Show());        // HEAD -> {  }
@@ -48,3 +74,4 @@ SimpleChoice sc = new SimpleChoice(stack);
 Console.WriteLine("\nПосле сортировки: ");
 Console.WriteLine(sc.Sort().Show());          //   HEAD -> { -1000, -1, 0, 1, 5, 25, 88 }
 Console.WriteLine("\n\n\n");
+*/

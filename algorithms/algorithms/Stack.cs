@@ -10,99 +10,88 @@ namespace algorithms
 {
     public class Stack
     {
-        public int length = 0;
+        public int length;
         private Element? head;
 
-        public Stack()
+        public Stack()  // 1
         {
-            head = null; // изначально голова стека равняется null
+            // изначально голова стека равняется null
+            head = null;  // 1
         }
 
-        /* Вталкиваем элемент в стек, со стороны головы */
-        public void Push(int value) // если передано просто число
+        public bool isEmpty()  // 1
         {
-            Element new_elem = new Element(value, head);   // создаём новый элемент с переданным value, поле Next которого ссылается на предыдущую голову
-            head = new_elem;   // этот новый элемент теперь становитя головой
-            this.length++;   // увеличиваем счетчик длины стека
+            return length == 0;  // 1
         }
 
-        public void Push(Element elem) // если передан сразу экземпляр класса Element
+        // если передан сразу экземпляр класса Element
+        public void Push(Element elem)  // 4
         {
-            elem.Next = head;
-            head = elem;
-            this.length++;
+            elem.Next = head;  // 2
+            head = elem;  // 1
+            length++;  // 1
         }
 
         /* Выталкиваем верхний элемент из стека, со стороны головы  */
-        public Element? Pop()
+        public Element? Pop()  // 6
         {
-            if (head != null)   // если стек не пустой
+            // если стек не пустой
+            if (!isEmpty())  // 2
             {
-                Element result = head;   // сохраняем выталкиваемый элемент 
-                head = head.Next;   // головой теперь становится тот элемент, который хранился в head.Next
-                length--;   // уменьшаем счетчик длины стека
+                // сохраняем выталкиваемый элемент 
+                Element result = head;  // 1
+                // головой теперь становится тот элемент, который хранился в head.Next
+                head = head.Next;  // 2
+                // уменьшаем счетчик длины стека
+                length--;  // 1
                 return result;
             }
             else
             {
-                throw new Exception("Stack is empty.");   // если стек пустой, то кидаем исключение в юзера
+                // если стек пустой, то кидаем исключение в юзера
+                throw new Exception("Stack is empty.");   
             }
         }
 
         /* Получение элемента стека по индексу */
-        public int Get(int index)
+        public Element Get(int index)  // 27n + 12
         {
-            if ((this.length - 1 >= index) && (index >= 0))   // если индекс попадает в диапазон стека
+            // если индекс попадает в диапазон стека
+            if ((length - 1 >= index) && (index >= 0))  // 4  
             {
-                Stack tmp_stack = new Stack();
-                for (int cnt = 0; cnt < index; cnt++)   // записываем все элементы стека до искомого индекса (не включая) во временный стек
+                Stack tmp_stack = new Stack();  // 2
+                // записываем все элементы стека до искомого индекса (не включая) во временный стек
+                for (int cnt = 0; cnt < index; cnt++)   // 2 + ∑_(cnt=1)^n▒〖13〗 =  13n+2
                 {
-                    tmp_stack.Push(this.Pop());
+                    tmp_stack.Push(Pop());  // 1 + 4 + 6 = 11
                 }
-                int result = this.head.Value;   // сохраняем искомый элемент
-                while (tmp_stack.length != 0)   // возвращаем всё как было
+                // сохраняем искомый элемент
+                Element result = head;  // 1
+                // возвращаем всё как было
+                while (!tmp_stack.isEmpty())  // 3 + ∑_(i=1)^n▒〖14〗 =  14n+3
                 {
-                    this.Push(tmp_stack.Pop());
+                    Push(tmp_stack.Pop());  // 4 + 1 + 6 = 11
                 }
                 return result;
             }
             throw new Exception("Index out of range.");  
         }
 
-        /* Вставка элемента в стек по переданному индексу */
-        public void Set(int index, int value)   // вставка, если передано просто число
+        // вставка, если передан сразу экземпляр класса Element
+        public void Set(int index, Element value)   // 26n + 15
         {
-            if ((index >= 0) && (index <= this.length))   // если индекс попадает в диапазон стека
+            if ((index >= 0) && (index <= length))  // 3
             {
-                Stack tmp_stack = new Stack();
-                for (int cnt = 0; cnt < index; cnt++)   // записываем все элементы стека до искомого индекса (не включая) во временный стек
+                Stack tmp_stack = new Stack();  // 2
+                for (int cnt = 0; cnt < index; cnt++)  // 2 + ∑_(cnt=1)^n▒〖13〗 =  13n+2
                 {
-                    tmp_stack.Push(this.Pop());
+                    tmp_stack.Push(Pop());  // 1 + 6 + 4 = 11
                 }
-                this.Push(new Element(value, this.head));   // вталкиваем новый элемент, поле Next которого будет ссылаться на бывший this[index] элемент
-                while (tmp_stack.length != 0)   // возвращаем элементы из временного стека
+                value.Next = head;  // 2
+                Push(value);  // 4
+                while (tmp_stack.length != 0)  // 2 + ∑_(i=1)^n▒〖13〗 =  13n+2
                 {
-                    this.Push(tmp_stack.Pop());
-                }
-                return;
-            }
-            throw new Exception("Index out of range.");
-        }
-
-        public void Set(int index, Element value)   // вставка, если передан сразу экземпляр класса Element
-        {
-            if ((index >= 0) && (index <= this.length))
-            {
-                Stack tmp_stack = new Stack();
-                for (int cnt = 0; cnt < index; cnt++)
-                {
-                    tmp_stack.Push(this.Pop());
-                }
-                value.Next = this.head;
-                this.Push(value);
-                while (tmp_stack.length != 0)
-                {
-                    this.Push(tmp_stack.Pop());
+                    Push(tmp_stack.Pop());  // 4 + 1 + 6 = 11
                 }
                 return;
             }
@@ -129,10 +118,10 @@ namespace algorithms
         }
 
         /* Перегрузка оператора индексации */
-        public int this[int index]
+        public Element this[int index]
         {
-            get => Get(index);
-            set => Set(index, value);
+            get => Get(index);  // 27n+12+2 = 27n+14 
+            set => Set(index, value);  // 26n+15+3 = 26n+18
         }
     }
 }
